@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Aaron Organic Foods</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: slideshow banner over forest green, then bands that rotate forest > mango > cream > cream > terracotta > mango > cream > forest. */
+:root{
+  --bg:#F7F2E7; --surface:#FFFFFF; --fg:#16241B; --muted:#55635A; --line:#E0D8C3;
+  --forest:#14462B; --forest-ink:#F7F2E7;
+  --mango:#F2B632; --mango-ink:#16241B;
+  --terra:#A9441F; --terra-ink:#FBF3E6;
+  --accent-text:#14462B;
+  --ph:#EAE2CF;
+  --font-display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --font-body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'DM Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1712; --surface:#16241B; --fg:#EDEFE3; --muted:#A5B3A8; --line:#2A3B2F;
+  --forest:#0F3A23; --forest-ink:#F2EFE2; --mango:#F2B632; --mango-ink:#16241B;
+  --terra:#8E3A1A; --terra-ink:#FBF3E6; --accent-text:#F2B632; --ph:#1D2E23; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1712; --surface:#16241B; --fg:#EDEFE3; --muted:#A5B3A8; --line:#2A3B2F;
+  --forest:#0F3A23; --forest-ink:#F2EFE2; --mango:#F2B632; --mango-ink:#16241B;
+  --terra:#8E3A1A; --terra-ink:#FBF3E6; --accent-text:#F2B632; --ph:#1D2E23; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--font-body);margin:0}
+h1,h2,h3{font-family:var(--font-display);line-height:1.04;margin:0;text-wrap:balance;letter-spacing:-.025em}
+p{margin:0}
+a{color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--mango);outline-offset:2px}
+.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:500 12px/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase}
+.band{padding-block:clamp(52px,8vw,100px)}
+.band.forest{background:var(--forest);color:var(--forest-ink)}
+.band.mango{background:var(--mango);color:var(--mango-ink)}
+.band.terra{background:var(--terra);color:var(--terra-ink)}
+.band.cream{background:var(--bg)}
+.band.paper{background:var(--surface)}
+.section-head{display:grid;gap:12px;margin-bottom:36px;max-width:62ch}
+.section-head h2{font-size:clamp(30px,5vw,54px);font-weight:700}
+.section-head p{color:var(--muted)}
+.band.mango .section-head p,.band.terra .section-head p,.band.forest .section-head p{color:inherit;opacity:.85}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 26px;border-radius:999px;font:700 16px var(--font-body);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn.mango{background:var(--mango);color:var(--mango-ink)}
+.btn.mango:hover{filter:brightness(1.07)}
+.btn.line{border-color:currentColor;background:transparent;color:inherit}
+.btn.line:hover{background:rgba(255,255,255,.12)}
+.btn.green{background:var(--forest);color:var(--forest-ink)}
+.btn.green:hover{filter:brightness(1.15)}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* top bar */
+.top{background:var(--forest);color:var(--forest-ink);position:relative;z-index:5}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px;flex-wrap:wrap}
+.brand{font:800 21px/1 var(--font-display);text-decoration:none;letter-spacing:-.015em}
+.brand span{color:var(--mango)}
+nav{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:600;flex-wrap:wrap}
+nav a{text-decoration:none;opacity:.92}
+nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:5px}
+nav .btn{min-height:38px;padding:0 16px;font-size:14px}
+
+/* slideshow hero */
+.hero{position:relative;background:var(--forest);color:#F7F2E7;overflow:hidden;isolation:isolate}
+.slides{position:absolute;inset:0;z-index:-2}
+.slide{position:absolute;inset:0;opacity:0}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,rgba(8,32,19,.94) 0%,rgba(8,32,19,.78) 42%,rgba(8,32,19,.25) 100%),
+             linear-gradient(0deg,rgba(8,32,19,.75) 0%,transparent 38%)}
+.hero .wrap{padding-block:clamp(64px,10vw,132px) clamp(88px,10vw,120px)}
+.hero h1{font-size:clamp(44px,8.6vw,100px);font-weight:800;max-width:11ch}
+.hero h1 em{font-style:normal;color:var(--mango)}
+.hero .lede{font-size:clamp(17px,2.2vw,21px);max-width:46ch;margin-top:22px;opacity:.94}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.hero .eyebrow{color:var(--mango)}
+.hero-ui{position:absolute;left:0;right:0;bottom:0;z-index:2}
+.hero-ui .wrap{padding-block:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cap{font:500 13px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;display:flex;gap:10px;align-items:center;min-width:0}
+.cap i{width:28px;height:2px;background:var(--mango);display:inline-block;flex:none}
+.dots{display:flex;gap:8px;align-items:center}
+.dots button{width:34px;height:34px;border:0;background:transparent;padding:0;cursor:pointer;display:grid;place-items:center}
+.dots button::before{content:"";width:28px;height:4px;background:rgba(255,255,255,.4);border-radius:2px}
+.dots button[aria-current="true"]::before{background:var(--mango)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);background:rgba(8,32,19,.35);color:#fff;font:600 18px var(--font-body);cursor:pointer}
+.arrows button:hover{background:var(--mango);color:#16241B;border-color:var(--mango)}
+
+/* ribbon */
+.ribbon{background:var(--mango);color:var(--mango-ink);overflow:hidden;border-block:3px solid var(--terra)}
+.ribbon .track{display:flex;width:max-content;animation:slide 38s linear infinite}
+.ribbon ul{list-style:none;margin:0;padding:0;display:flex;flex:none}
+.ribbon li{font:800 20px/1 var(--font-display);letter-spacing:.02em;text-transform:uppercase;padding:16px 0 16px 28px;display:flex;align-items:center;gap:28px;white-space:nowrap}
+.ribbon li::after{content:"";width:10px;height:10px;background:var(--terra);transform:rotate(45deg)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cat{position:relative;min-height:380px;display:flex;align-items:flex-end;overflow:hidden;color:#fff;text-decoration:none;isolation:isolate;background:var(--forest)}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.cat::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(8,32,19,.92) 0%,rgba(8,32,19,.35) 55%,transparent 100%)}
+.cat.rice img{object-fit:contain;padding:28px 28px 120px;background:#F2EEE2}
+.cat .in{padding:24px;display:grid;gap:8px}
+.cat .n{font:500 12px var(--font-mono);letter-spacing:.14em;color:var(--mango)}
+.cat h3{font-size:30px;font-weight:700}
+.cat p{font-size:15px;opacity:.92;max-width:34ch}
+.cat.m1{border-top:8px solid var(--mango)}
+.cat.m2{border-top:8px solid var(--terra)}
+.cat.m3{border-top:8px solid #6FA84F}
+
+/* shop */
+.shop{display:grid;grid-template-columns:1fr 330px;gap:40px;align-items:start}
+.group{margin-bottom:44px}
+.group-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--fg)}
+.group-head .chip{width:16px;height:16px;border-radius:50%;flex:none}
+.group-head h3{font-size:26px;font-weight:700}
+.group-head span.count{margin-left:auto;font:500 12px var(--font-mono);letter-spacing:.1em;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);display:grid;grid-template-rows:auto 1fr;min-width:0}
+.media{aspect-ratio:4/3;background:var(--ph);position:relative;overflow:hidden}
+.media img{width:100%;height:100%;object-fit:cover}
+.media img.pack{object-fit:contain;padding:10px;background:#F2EEE2}
+.media .none{position:absolute;inset:0;display:grid;place-items:center}
+.media .none svg{width:64px;height:64px}
+.body{padding:14px;display:grid;gap:10px;align-content:space-between}
+.body h4{margin:0;font:700 17px/1.25 var(--font-body)}
+.body .unit{font-size:14px;color:var(--muted)}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.price{font:500 17px var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stepper{display:flex;align-items:center;border:1.5px solid var(--fg);border-radius:999px;overflow:hidden}
+.stepper button{width:40px;height:40px;border:0;background:transparent;color:var(--fg);font:600 20px var(--font-body);cursor:pointer}
+.stepper button:hover{background:var(--mango);color:var(--mango-ink)}
+.stepper output{min-width:26px;text-align:center;font:500 15px var(--font-mono);font-variant-numeric:tabular-nums}
+.card.has{border-color:var(--forest);box-shadow:0 0 0 2px var(--forest)}
+
+.basket{position:sticky;top:16px;background:var(--forest);color:var(--forest-ink);padding:24px;display:grid;gap:14px;border-bottom:8px solid var(--mango)}
+.basket h3{font-size:26px;font-weight:700}
+.basket ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:15px}
+.basket li{display:flex;justify-content:space-between;gap:12px}
+.basket li span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.basket .empty{opacity:.8;font-size:14px}
+.total{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.3);padding-top:14px;font-weight:700;font-size:18px}
+.total span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.note{font-size:13px;opacity:.82}
+
+/* delivery */
+.delivery .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,80px);align-items:start}
+.delivery h2{font-size:clamp(30px,5vw,54px);font-weight:700}
+.delivery .lead{margin-top:18px;max-width:46ch;opacity:.92;font-size:18px}
+.steps{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.35)}
+.steps li{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.35)}
+.steps b{font:500 13px var(--font-mono);color:var(--mango);padding-top:5px}
+.steps strong{display:block;font:700 22px var(--font-display)}
+.steps span{opacity:.9}
+
+/* about */
+.about .cols{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,6vw,80px);align-items:center}
+.about h2{font-size:clamp(30px,5vw,54px);font-weight:700}
+.about .txt{display:grid;gap:16px;font-size:19px;max-width:56ch}
+.about .facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.about .facts span{border:2px solid currentColor;border-radius:999px;padding:6px 14px;font:700 14px var(--font-body)}
+
+/* order */
+form{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;max-width:780px}
+.field{display:grid;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+label{font:700 14px var(--font-body)}
+input,select,textarea{font:16px var(--font-body);color:var(--fg);background:var(--bg);border:1.5px solid var(--fg);border-radius:10px;padding:12px 14px;min-height:50px;width:100%;min-width:0}
+textarea{min-height:92px;resize:vertical}
+.err{color:var(--terra);font-size:13px;min-height:1em;font-weight:600}
+:root[data-theme="dark"] .err{color:#F0906A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .err{color:#F0906A}}
+.wa{background:#1F8A4C;color:#fff;font-size:17px}
+.wa:hover{filter:brightness(1.1)}
+.hint{font-size:14px;color:var(--muted)}
+.cta-wrap{display:grid;gap:10px;justify-items:start}
+.contact{font-weight:700}
+
+footer{background:#0A2316;color:#EDEFE3;padding-block:44px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px}
+footer .brand span{color:var(--mango)}
+footer .info{display:grid;gap:4px;text-align:right}
+
+.pill{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;display:none;justify-content:space-between;align-items:center;gap:12px;background:var(--mango);color:var(--mango-ink);border-radius:999px;padding:0 22px;min-height:54px;font-weight:700;text-decoration:none;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.pill b{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+@media (max-width:900px){
+  .cats{grid-template-columns:1fr}
+  .cat{min-height:300px}
+  .shop{grid-template-columns:1fr}
+  .basket{position:static}
+  .delivery .cols,.about .cols{grid-template-columns:1fr}
+  form{grid-template-columns:1fr}
+  footer .info{text-align:left}
+  body.has-basket .pill{display:flex}
+  body.has-basket{padding-bottom:84px}
+  .hero::after{background:linear-gradient(0deg,rgba(8,32,19,.9) 0%,rgba(8,32,19,.72) 60%,rgba(8,32,19,.5) 100%)}
+}
+@media (max-width:520px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .body{padding:10px}
+  .body h4{font-size:15px}
+  .buy{flex-direction:column;align-items:stretch}
+  .price{text-align:center}
+  .arrows{display:none}
+  nav a:not(.btn){display:none}
+}
+@media (prefers-reduced-motion: no-preference){
+  .slide{transition:opacity 1.1s ease}
+  .slide.on img{animation:drift 9s ease-out both}
+  @keyframes drift{from{transform:scale(1.06)}to{transform:scale(1)}}
+  .btn{transition:filter .15s,background .15s}
+}
+@media (prefers-reduced-motion: reduce){.ribbon .track{animation:none}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Aaron <span>Organic</span> Foods</a>
+    <nav aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#delivery">Delivery</a>
+      <a href="#about">About</a>
+      <a class="btn mango" href="https://wa.me/4591657606" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-roledescription="carousel" aria-label="Featured foods">
+  <div class="slides" id="slides">
+    <div class="slide on" data-cap="Matooke, 10 kg box"><img src="photo-bananas.jpg" alt="Bunches of green matooke bananas" style="object-position:50% 30%"></div>
+    <div class="slide" data-cap="Beef, 1 kg"><img src="photo-beef.jpg" alt="A tray of fresh beef cuts" style="object-position:50% 40%"></div>
+    <div class="slide" data-cap="Fish steaks"><img src="photo-fish.jpg" alt="Thick fish steaks in a bowl" style="object-position:50% 40%"></div>
+    <div class="slide" data-cap="Sweet potatoes"><img src="photo-sweetpotatoes.jpg" alt="A pile of pink-skinned sweet potatoes" style="object-position:50% 45%"></div>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Organic African staples · Denmark</p>
+    <h1 style="margin-top:18px">Matooke, rice &amp; <em>the taste of home.</em></h1>
+    <p class="lede">Matooke, rice, posho, beans, fish and meat, packed to order and delivered to your door across Denmark.</p>
+    <div class="cta-row">
+      <a class="btn mango" href="#shop">Shop now</a>
+      <a class="btn line" href="https://wa.me/4591657606?text=Hello%20Aaron%20Organic%20Foods%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-ui">
+    <div class="wrap">
+      <div class="cap"><i></i><span id="cap" aria-live="off">Matooke, 10 kg box</span></div>
+      <div class="dots" id="dots" role="group" aria-label="Choose slide"></div>
+      <div class="arrows">
+        <button type="button" id="prev" aria-label="Previous slide">←</button>
+        <button type="button" id="next" aria-label="Next slide">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon" aria-hidden="true">
+  <div class="track">
+    <ul><li>Matooke</li><li>Basmati rice</li><li>Posho</li><li>Beans</li><li>Fresh fish</li><li>Goat meat</li><li>Beef</li><li>Sweet potatoes</li><li>Millet flour</li></ul>
+    <ul><li>Matooke</li><li>Basmati rice</li><li>Posho</li><li>Beans</li><li>Fresh fish</li><li>Goat meat</li><li>Beef</li><li>Sweet potatoes</li><li>Millet flour</li></ul>
+  </div>
+</div>
+
+<section class="band cream" id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" style="color:var(--accent-text)">Shop by category</p>
+      <h2>Three shelves, stocked for a proper meal.</h2>
+    </div>
+    <div class="cats">
+      <a class="cat m1 rice" href="#grains">
+        <img src="photo-greenland.jpg" alt="A sack of long grain rice">
+        <div class="in"><span class="n">GRAINS &amp; STAPLES</span><h3>Rice, posho, beans</h3><p>The base of the plate, from 1 kg bags to 25 kg sacks.</p></div>
+      </a>
+      <a class="cat m2" href="#meat">
+        <img src="photo-hangingbeef.jpg" alt="Cuts of beef hanging in a butcher shop" style="object-position:50% 40%">
+        <div class="in"><span class="n">MEAT &amp; SEAFOOD</span><h3>Fish and meat</h3><p>Frozen fish, goat meat and beef, packed cold for the trip.</p></div>
+      </a>
+      <a class="cat m3" href="#produce">
+        <img src="photo-potatoes.jpg" alt="A pile of yellow potatoes" style="object-position:50% 50%;background:#fff;object-fit:contain;padding:24px 24px 120px">
+        <div class="in"><span class="n">FRESH PRODUCE</span><h3>Matooke and roots</h3><p>Banana boxes, potatoes and frozen yam for your pot.</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="band paper" id="shop" style="padding-top:clamp(40px,6vw,72px)">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" style="color:var(--accent-text)">Featured products</p>
+      <h2>Build your basket.</h2>
+      <p>Add what you need, then send your order on WhatsApp. Prices are in Danish kroner.</p>
+    </div>
+    <div class="shop">
+      <div id="groups"></div>
+      <aside class="basket" aria-live="polite">
+        <h3>Your basket</h3>
+        <ul id="basket-list"></ul>
+        <div class="total"><span>Subtotal</span><span id="subtotal">0 kr</span></div>
+        <a class="btn mango" href="#order">Go to order form</a>
+        <p class="note">We confirm the delivery fee when we reply.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band terra delivery" id="delivery">
+  <div class="wrap cols">
+    <div>
+      <p class="eyebrow" style="color:var(--mango)">Organic delivery</p>
+      <h2 style="margin-top:14px">Fresh staples, across Denmark.</h2>
+      <p class="lead">Matooke does not like to wait. We pack to order and ship in insulated boxes, so what reaches you is what left the farm.</p>
+    </div>
+    <ol class="steps">
+      <li><b>1</b><div><strong>Choose</strong><span>Fill your basket and open the order on WhatsApp.</span></div></li>
+      <li><b>2</b><div><strong>Confirm</strong><span>We reply with your delivery day and total, including delivery.</span></div></li>
+      <li><b>3</b><div><strong>Receive</strong><span>Your box arrives packed cold or dry, depending on the items.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band mango about" id="about">
+  <div class="wrap cols">
+    <div>
+      <p class="eyebrow">Rooted in quality</p>
+      <h2 style="margin-top:14px">From farmers we know to a table you know.</h2>
+    </div>
+    <div class="txt">
+      <p>Aaron Organic Foods Denmark brings the flavors of East Africa to the Nordic heart. We partner with farmers to source organic matooke, rice and fish, and we ship every order with the same care we would want at our own table.</p>
+      <p>Sustainable sourcing, fresh produce and honest weights. If something is not right with your order, tell us and we will fix it.</p>
+      <div class="facts"><span>Organic sourcing</span><span>Packed to order</span><span>Delivery in Denmark</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band cream" id="order">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" style="color:var(--accent-text)">Place an order</p>
+      <h2>Tell us where to deliver.</h2>
+      <p>Your basket is added automatically. When you press the green button, WhatsApp opens with your order written out and ready to send to us.</p>
+      <p class="contact">WhatsApp and phone <a href="https://wa.me/4591657606" target="_blank" rel="noopener">+45 91 65 76 06</a> · <a href="mailto:Mandeemmies@gmail.com">Mandeemmies@gmail.com</a></p>
+    </div>
+    <form id="order-form" novalidate>
+      <div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required><span class="err" id="e-name"></span></div>
+      <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required><span class="err" id="e-phone"></span></div>
+      <div class="field full"><label for="street">Street and number</label><input id="street" name="street" autocomplete="street-address" required><span class="err" id="e-street"></span></div>
+      <div class="field"><label for="zip">Postcode</label><input id="zip" name="zip" inputmode="numeric" maxlength="4" placeholder="e.g. 7700" autocomplete="postal-code" required><span class="err" id="e-zip"></span></div>
+      <div class="field"><label for="city">Town</label><input id="city" name="city" autocomplete="address-level2" placeholder="e.g. Thisted" required><span class="err" id="e-city"></span></div>
+      <div class="field"><label for="day">Preferred delivery day</label>
+        <select id="day" name="day"><option>Any weekday</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
+      <div class="field"><label for="pay">Payment</label>
+        <select id="pay" name="pay"><option>Pay on delivery</option><option>Bank transfer</option><option>MobilePay</option></select></div>
+      <div class="field full"><label for="msg">Notes (optional)</label><textarea id="msg" name="msg" placeholder="Ripeness of matooke, door code, allergies"></textarea></div>
+      <div class="field full cta-wrap">
+        <a class="btn wa" id="wa-send" href="https://wa.me/4591657606" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>
+          Send order on WhatsApp</a>
+        <span class="err" id="e-basket"></span>
+        <p class="hint">Nothing is sent until you press send inside WhatsApp. If it does not open, message +45 91 65 76 06.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<a class="pill" id="pill" href="#order"><span id="pill-n">0 items</span><b id="pill-t">0 kr</b></a>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top">Aaron <span>Organic</span> Foods</a>
+    <div class="info">
+      <span>Rosvangvej 28B, 7700 Thisted, Denmark</span>
+      <span>WhatsApp +45 91 65 76 06 · Mandeemmies@gmail.com</span>
+      <span>CVR 46210905</span>
+      <span>© 2026 Aaron Organic Foods Denmark. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var WA='4591657606';
+  var ICON={
+    grain:'<svg viewBox="0 0 64 64" fill="none" stroke="#14462B" stroke-width="3" stroke-linecap="round"><path d="M32 58V14"/><path d="M32 26c-8 0-12-5-12-10 8 0 12 4 12 10zm0 0c8 0 12-5 12-10-8 0-12 4-12 10zM32 40c-8 0-12-5-12-10 8 0 12 4 12 10zm0 0c8 0 12-5 12-10-8 0-12 4-12 10z"/></svg>',
+    meat:'<svg viewBox="0 0 64 64" fill="none" stroke="#A9441F" stroke-width="3" stroke-linejoin="round"><path d="M12 38c0-12 10-22 24-22 10 0 16 6 16 14 0 10-8 18-20 18-6 0-8-2-12-2-4 0-8-2-8-8z"/><circle cx="40" cy="30" r="5"/></svg>'
+  };
+  // Prices from the client's handwritten list (DKK). img: file, fit: 'pack' (contain) or photo (cover).
+  var GROUPS=[
+    {id:'grains',t:'Grains & staples',c:'#F2B632',items:[
+      {id:'basmati18',n:'Basmati rice',u:'18 kg bag',p:350,img:'basmati',fit:'pack'},
+      {id:'jasmine18',n:'Jasmine rice',u:'18 kg bag',p:250,img:'greenland',fit:'pack'},
+      {id:'jasmine5',n:'Jasmine rice',u:'5 kg bag',p:85,img:'greenland',fit:'pack'},
+      {id:'posho1',n:'Posho (maize flour)',u:'1 kg',p:20,img:'maize',fit:'pack'},
+      {id:'posho5',n:'Posho (maize flour)',u:'5 kg',p:100,img:'maize',fit:'pack'},
+      {id:'posho25',n:'Posho (maize flour)',u:'25 kg',p:500,img:'maize',fit:'pack'},
+      {id:'millet',n:'Millet flour',u:'1 kg',p:28,img:'flour',fit:'pack'},
+      {id:'beans',n:'Beans',u:'1 kg',p:35,img:'beans',fit:'pack'}
+    ]},
+    {id:'meat',t:'Meat & seafood',c:'#A9441F',items:[
+      {id:'fish',n:'Frozen fish',u:'frozen',p:250,img:'fish'},
+      {id:'goat',n:'Goat meat',u:'per kg',p:100,img:'goat'},
+      {id:'beef',n:'Beef',u:'1 kg',p:120,img:'beef'}
+    ]},
+    {id:'produce',t:'Fresh produce',c:'#6FA84F',items:[
+      {id:'banana',n:'Matooke, banana box',u:'10 kg box',p:550,img:'bananas',pos:'50% 30%'},
+      {id:'potato',n:'Potatoes, box',u:'box',p:580,img:'potatoes',fit:'pack'},
+      {id:'yam',n:'Frozen yam',u:'1 kg',p:70,img:'taro',fit:'pack'}
+    ]}
+  ];
+  var ALL=[];GROUPS.forEach(function(g){g.items.forEach(function(i){ALL.push(i)})});
+  var qty={};ALL.forEach(function(p){qty[p.id]=0});
+  var kr=function(n){return n.toLocaleString('da-DK')+' kr'};
+  var cards={};
+
+  var gEl=document.getElementById('groups');
+  GROUPS.forEach(function(g){
+    var sec=document.createElement('div');sec.className='group';sec.id=g.id;
+    sec.innerHTML='<div class="group-head"><span class="chip" style="background:'+g.c+'"></span><h3></h3><span class="count">'+g.items.length+' ITEMS</span></div><div class="grid"></div>';
+    sec.querySelector('h3').textContent=g.t;
+    var grid=sec.querySelector('.grid');
+    g.items.forEach(function(p){
+      var c=document.createElement('article');c.className='card';
+      var media=p.img?'<img class="'+(p.fit==='pack'?'pack':'')+'" src="photo-'+p.img+'.jpg" alt="" loading="lazy"'+(p.pos?' style="object-position:'+p.pos+'"':'')+'>':'<div class="none">'+ICON[p.icon]+'</div>';
+      c.innerHTML='<div class="media">'+media+'</div><div class="body"><div><h4></h4><div class="unit"></div></div><div class="buy"><span class="price">'+kr(p.p)+'</span><div class="stepper"><button type="button" aria-label="Remove one">−</button><output>0</output><button type="button" aria-label="Add one">+</button></div></div></div>';
+      c.querySelector('h4').textContent=p.n;c.querySelector('.unit').textContent=p.u;
+      var out=c.querySelector('output'),b=c.querySelectorAll('button');
+      b[0].onclick=function(){if(qty[p.id]>0){qty[p.id]--;out.textContent=qty[p.id];render()}};
+      b[1].onclick=function(){if(qty[p.id]<20){qty[p.id]++;out.textContent=qty[p.id];render()}};
+      cards[p.id]=c;grid.appendChild(c);
+    });
+    gEl.appendChild(sec);
+  });
+
+  var listEl=document.getElementById('basket-list');
+  function lines(){return ALL.filter(function(p){return qty[p.id]>0})}
+  function total(){return lines().reduce(function(s,p){return s+p.p*qty[p.id]},0)}
+  function count(){return lines().reduce(function(s,p){return s+qty[p.id]},0)}
+  function label(p){return p.n+' ('+p.u+')'}
+  function render(){
+    var l=lines();listEl.innerHTML='';
+    if(!l.length){var e=document.createElement('li');e.className='empty';e.textContent='Nothing yet. Add items from the shelves.';listEl.appendChild(e)}
+    l.forEach(function(p){var li=document.createElement('li'),a=document.createElement('span'),b=document.createElement('span');a.textContent=qty[p.id]+' × '+p.n+', '+p.u;b.textContent=kr(p.p*qty[p.id]);li.appendChild(a);li.appendChild(b);listEl.appendChild(li)});
+    document.getElementById('subtotal').textContent=kr(total());
+    ALL.forEach(function(p){cards[p.id].classList.toggle('has',qty[p.id]>0)});
+    var n=count();
+    document.body.classList.toggle('has-basket',n>0);
+    document.getElementById('pill-n').textContent=n+(n===1?' item':' items')+' · view order';
+    document.getElementById('pill-t').textContent=kr(total());
+    document.getElementById('e-basket').textContent='';
+  }
+  render();
+
+  /* WhatsApp order */
+  var f=document.getElementById('order-form'),wa=document.getElementById('wa-send');
+  function v(id){return f.elements[id].value.trim()}
+  function setErr(id,m){document.getElementById('e-'+id).textContent=m;return !m}
+  function message(){
+    var t=['Hello Aaron Organic Foods, I would like to order:',''];
+    lines().forEach(function(p){t.push('• '+qty[p.id]+' × '+label(p)+' = '+kr(p.p*qty[p.id]))});
+    t.push('','Subtotal: '+kr(total())+' (delivery fee to be confirmed)','',
+      'Name: '+v('name'),'Phone: '+v('phone'),'Address: '+v('street')+', '+v('zip')+' '+v('city'),
+      'Delivery day: '+v('day'),'Payment: '+v('pay'));
+    if(v('msg'))t.push('Notes: '+v('msg'));
+    return t.join('\n');
+  }
+  f.addEventListener('submit',function(e){e.preventDefault()});
+  wa.addEventListener('click',function(ev){
+    var ok=true;
+    ok=setErr('name',v('name')?'':'Enter your name.')&&ok;
+    ok=setErr('phone',/^[+\d][\d\s-]{6,}$/.test(v('phone'))?'':'Enter a phone number we can reach.')&&ok;
+    ok=setErr('street',v('street')?'':'Enter your street and number.')&&ok;
+    ok=setErr('zip',/^\d{4}$/.test(v('zip'))?'':'Danish postcodes have 4 digits.')&&ok;
+    ok=setErr('city',v('city')?'':'Enter your town.')&&ok;
+    ok=setErr('basket',lines().length?'':'Add at least one item to your basket first.')&&ok;
+    if(!ok){
+      ev.preventDefault();
+      var bad=['name','phone','street','zip','city'].filter(function(k){return document.getElementById('e-'+k).textContent})[0];
+      var target=bad?document.getElementById(bad):document.getElementById('shop');
+      target.scrollIntoView({behavior:'smooth',block:'center'});
+      if(bad)target.focus({preventScroll:true});
+      document.getElementById('e-basket').textContent=bad?'Please complete the highlighted fields above.':'Add at least one item to your basket first.';
+      return;
+    }
+    refreshWa();
+  });
+  function refreshWa(){if(wa)wa.href='https://wa.me/'+WA+'?text='+encodeURIComponent(message())}
+  f.addEventListener('input',refreshWa);f.addEventListener('change',refreshWa);
+  document.getElementById('groups').addEventListener('click',function(){setTimeout(refreshWa,0)});
+  refreshWa();
+
+  /* Slideshow */
+  var slides=[].slice.call(document.querySelectorAll('.slide')),dotsEl=document.getElementById('dots'),capEl=document.getElementById('cap');
+  var cur=0,timer=null,reduce=false;
+  try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+  slides.forEach(function(s,i){
+    var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Show slide '+(i+1));
+    b.onclick=function(){go(i);restart()};dotsEl.appendChild(b);
+  });
+  function go(i){
+    cur=(i+slides.length)%slides.length;
+    slides.forEach(function(s,k){s.classList.toggle('on',k===cur)});
+    [].forEach.call(dotsEl.children,function(b,k){b.setAttribute('aria-current',k===cur?'true':'false')});
+    capEl.textContent=slides[cur].getAttribute('data-cap');
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null}}
+  function start(){if(!reduce&&!timer)timer=setInterval(function(){go(cur+1)},5200)}
+  function restart(){stop();start()}
+  document.getElementById('prev').onclick=function(){go(cur-1);restart()};
+  document.getElementById('next').onclick=function(){go(cur+1);restart()};
+  var hero=document.querySelector('.hero');
+  hero.addEventListener('mouseenter',stop);hero.addEventListener('mouseleave',start);
+  hero.addEventListener('focusin',stop);hero.addEventListener('focusout',start);
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
+  go(0);start();
+})();
+</script>
+
+</body>
+</html>
