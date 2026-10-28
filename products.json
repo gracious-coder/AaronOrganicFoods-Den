@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Basmati rice",
+    "unit": "18 kg bag",
+    "price": 350,
+    "category": "grains",
+    "image": "/photos/basmati.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Jasmine rice",
+    "unit": "18 kg bag",
+    "price": 250,
+    "category": "grains",
+    "image": "/photos/greenland.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Jasmine rice",
+    "unit": "5 kg bag",
+    "price": 85,
+    "category": "grains",
+    "image": "/photos/greenland.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Posho (maize flour)",
+    "unit": "1 kg",
+    "price": 20,
+    "category": "grains",
+    "image": "/photos/maize.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Posho (maize flour)",
+    "unit": "5 kg",
+    "price": 100,
+    "category": "grains",
+    "image": "/photos/maize.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Posho (maize flour)",
+    "unit": "25 kg",
+    "price": 500,
+    "category": "grains",
+    "image": "/photos/maize.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Millet flour",
+    "unit": "1 kg",
+    "price": 28,
+    "category": "grains",
+    "image": "/photos/flour.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Beans",
+    "unit": "1 kg",
+    "price": 35,
+    "category": "grains",
+    "image": "/photos/beans.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Frozen fish",
+    "unit": "frozen",
+    "price": 250,
+    "category": "meat",
+    "image": "/photos/fish.jpg",
+    "fullPhoto": false,
+    "available": true
+  },
+  {
+    "name": "Goat meat",
+    "unit": "per kg",
+    "price": 100,
+    "category": "meat",
+    "image": "/photos/goat.jpg",
+    "fullPhoto": false,
+    "available": true
+  },
+  {
+    "name": "Beef",
+    "unit": "1 kg",
+    "price": 120,
+    "category": "meat",
+    "image": "/photos/beef.jpg",
+    "fullPhoto": false,
+    "available": true
+  },
+  {
+    "name": "Matooke, banana box",
+    "unit": "10 kg box",
+    "price": 550,
+    "category": "produce",
+    "image": "/photos/bananas.jpg",
+    "fullPhoto": false,
+    "available": true
+  },
+  {
+    "name": "Potatoes, box",
+    "unit": "box",
+    "price": 580,
+    "category": "produce",
+    "image": "/photos/potatoes.jpg",
+    "fullPhoto": true,
+    "available": true
+  },
+  {
+    "name": "Frozen yam",
+    "unit": "1 kg",
+    "price": 70,
+    "category": "produce",
+    "image": "/photos/taro.jpg",
+    "fullPhoto": true,
+    "available": true
+  }
+]

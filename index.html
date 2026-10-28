@@ -194,6 +194,10 @@ footer .info{display:grid;gap:4px;text-align:right}
 .pill{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;display:none;justify-content:space-between;align-items:center;gap:12px;background:var(--mango);color:var(--mango-ink);border-radius:999px;padding:0 22px;min-height:54px;font-weight:700;text-decoration:none;box-shadow:0 6px 24px rgba(0,0,0,.3)}
 .pill b{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
 
+.loading{color:var(--muted)}
+.media img:not(.pack){object-position:50% 35%}
+.soldout{font:700 12px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1.5px solid currentColor;border-radius:999px;padding:9px 14px;text-align:center}
+.card.out .media{filter:grayscale(1);opacity:.55}
 @media (max-width:900px){
   .cats{grid-template-columns:1fr}
   .cat{min-height:300px}
@@ -241,10 +245,10 @@ footer .info{display:grid;gap:4px;text-align:right}
 <main id="top">
 <section class="hero" aria-roledescription="carousel" aria-label="Featured foods">
   <div class="slides" id="slides">
-    <div class="slide on" data-cap="Matooke, 10 kg box"><img src="photo-bananas.jpg" alt="Bunches of green matooke bananas" style="object-position:50% 30%"></div>
-    <div class="slide" data-cap="Beef, 1 kg"><img src="photo-beef.jpg" alt="A tray of fresh beef cuts" style="object-position:50% 40%"></div>
-    <div class="slide" data-cap="Fish steaks"><img src="photo-fish.jpg" alt="Thick fish steaks in a bowl" style="object-position:50% 40%"></div>
-    <div class="slide" data-cap="Sweet potatoes"><img src="photo-sweetpotatoes.jpg" alt="A pile of pink-skinned sweet potatoes" style="object-position:50% 45%"></div>
+    <div class="slide on" data-cap="Matooke, 10 kg box"><img src="photos/bananas.jpg" alt="Bunches of green matooke bananas" style="object-position:50% 30%"></div>
+    <div class="slide" data-cap="Beef, 1 kg"><img src="photos/beef.jpg" alt="A tray of fresh beef cuts" style="object-position:50% 40%"></div>
+    <div class="slide" data-cap="Fish steaks"><img src="photos/fish.jpg" alt="Thick fish steaks in a bowl" style="object-position:50% 40%"></div>
+    <div class="slide" data-cap="Sweet potatoes"><img src="photos/sweetpotatoes.jpg" alt="A pile of pink-skinned sweet potatoes" style="object-position:50% 45%"></div>
   </div>
   <div class="wrap">
     <p class="eyebrow">Organic African staples · Denmark</p>
@@ -282,15 +286,15 @@ footer .info{display:grid;gap:4px;text-align:right}
     </div>
     <div class="cats">
       <a class="cat m1 rice" href="#grains">
-        <img src="photo-greenland.jpg" alt="A sack of long grain rice">
+        <img src="photos/greenland.jpg" alt="A sack of long grain rice">
         <div class="in"><span class="n">GRAINS &amp; STAPLES</span><h3>Rice, posho, beans</h3><p>The base of the plate, from 1 kg bags to 25 kg sacks.</p></div>
       </a>
       <a class="cat m2" href="#meat">
-        <img src="photo-hangingbeef.jpg" alt="Cuts of beef hanging in a butcher shop" style="object-position:50% 40%">
+        <img src="photos/hangingbeef.jpg" alt="Cuts of beef hanging in a butcher shop" style="object-position:50% 40%">
         <div class="in"><span class="n">MEAT &amp; SEAFOOD</span><h3>Fish and meat</h3><p>Frozen fish, goat meat and beef, packed cold for the trip.</p></div>
       </a>
       <a class="cat m3" href="#produce">
-        <img src="photo-potatoes.jpg" alt="A pile of yellow potatoes" style="object-position:50% 50%;background:#fff;object-fit:contain;padding:24px 24px 120px">
+        <img src="photos/potatoes.jpg" alt="A pile of yellow potatoes" style="object-position:50% 50%;background:#fff;object-fit:contain;padding:24px 24px 120px">
         <div class="in"><span class="n">FRESH PRODUCE</span><h3>Matooke and roots</h3><p>Banana boxes, potatoes and frozen yam for your pot.</p></div>
       </a>
     </div>
@@ -305,7 +309,7 @@ footer .info{display:grid;gap:4px;text-align:right}
       <p>Add what you need, then send your order on WhatsApp. Prices are in Danish kroner.</p>
     </div>
     <div class="shop">
-      <div id="groups"></div>
+      <div id="groups"><p class="loading">Loading products…</p></div>
       <aside class="basket" aria-live="polite">
         <h3>Your basket</h3>
         <ul id="basket-list"></ul>
@@ -398,52 +402,77 @@ footer .info{display:grid;gap:4px;text-align:right}
     grain:'<svg viewBox="0 0 64 64" fill="none" stroke="#14462B" stroke-width="3" stroke-linecap="round"><path d="M32 58V14"/><path d="M32 26c-8 0-12-5-12-10 8 0 12 4 12 10zm0 0c8 0 12-5 12-10-8 0-12 4-12 10zM32 40c-8 0-12-5-12-10 8 0 12 4 12 10zm0 0c8 0 12-5 12-10-8 0-12 4-12 10z"/></svg>',
     meat:'<svg viewBox="0 0 64 64" fill="none" stroke="#A9441F" stroke-width="3" stroke-linejoin="round"><path d="M12 38c0-12 10-22 24-22 10 0 16 6 16 14 0 10-8 18-20 18-6 0-8-2-12-2-4 0-8-2-8-8z"/><circle cx="40" cy="30" r="5"/></svg>'
   };
-  // Prices from the client's handwritten list (DKK). img: file, fit: 'pack' (contain) or photo (cover).
-  var GROUPS=[
-    {id:'grains',t:'Grains & staples',c:'#F2B632',items:[
-      {id:'basmati18',n:'Basmati rice',u:'18 kg bag',p:350,img:'basmati',fit:'pack'},
-      {id:'jasmine18',n:'Jasmine rice',u:'18 kg bag',p:250,img:'greenland',fit:'pack'},
-      {id:'jasmine5',n:'Jasmine rice',u:'5 kg bag',p:85,img:'greenland',fit:'pack'},
-      {id:'posho1',n:'Posho (maize flour)',u:'1 kg',p:20,img:'maize',fit:'pack'},
-      {id:'posho5',n:'Posho (maize flour)',u:'5 kg',p:100,img:'maize',fit:'pack'},
-      {id:'posho25',n:'Posho (maize flour)',u:'25 kg',p:500,img:'maize',fit:'pack'},
-      {id:'millet',n:'Millet flour',u:'1 kg',p:28,img:'flour',fit:'pack'},
-      {id:'beans',n:'Beans',u:'1 kg',p:35,img:'beans',fit:'pack'}
-    ]},
-    {id:'meat',t:'Meat & seafood',c:'#A9441F',items:[
-      {id:'fish',n:'Frozen fish',u:'frozen',p:250,img:'fish'},
-      {id:'goat',n:'Goat meat',u:'per kg',p:100,img:'goat'},
-      {id:'beef',n:'Beef',u:'1 kg',p:120,img:'beef'}
-    ]},
-    {id:'produce',t:'Fresh produce',c:'#6FA84F',items:[
-      {id:'banana',n:'Matooke, banana box',u:'10 kg box',p:550,img:'bananas',pos:'50% 30%'},
-      {id:'potato',n:'Potatoes, box',u:'box',p:580,img:'potatoes',fit:'pack'},
-      {id:'yam',n:'Frozen yam',u:'1 kg',p:70,img:'taro',fit:'pack'}
-    ]}
+  var CATS=[
+    {id:'grains',t:'Grains & staples',c:'#F2B632'},
+    {id:'meat',t:'Meat & seafood',c:'#A9441F'},
+    {id:'produce',t:'Fresh produce',c:'#6FA84F'}
   ];
-  var ALL=[];GROUPS.forEach(function(g){g.items.forEach(function(i){ALL.push(i)})});
-  var qty={};ALL.forEach(function(p){qty[p.id]=0});
+  // Used only when products.json cannot be loaded. The live list is products.json.
+  var DEFAULTS=[{"name": "Basmati rice", "unit": "18 kg bag", "price": 350, "category": "grains", "image": "/photos/basmati.jpg", "fullPhoto": true, "available": true}, {"name": "Jasmine rice", "unit": "18 kg bag", "price": 250, "category": "grains", "image": "/photos/greenland.jpg", "fullPhoto": true, "available": true}, {"name": "Jasmine rice", "unit": "5 kg bag", "price": 85, "category": "grains", "image": "/photos/greenland.jpg", "fullPhoto": true, "available": true}, {"name": "Posho (maize flour)", "unit": "1 kg", "price": 20, "category": "grains", "image": "/photos/maize.jpg", "fullPhoto": true, "available": true}, {"name": "Posho (maize flour)", "unit": "5 kg", "price": 100, "category": "grains", "image": "/photos/maize.jpg", "fullPhoto": true, "available": true}, {"name": "Posho (maize flour)", "unit": "25 kg", "price": 500, "category": "grains", "image": "/photos/maize.jpg", "fullPhoto": true, "available": true}, {"name": "Millet flour", "unit": "1 kg", "price": 28, "category": "grains", "image": "/photos/flour.jpg", "fullPhoto": true, "available": true}, {"name": "Beans", "unit": "1 kg", "price": 35, "category": "grains", "image": "/photos/beans.jpg", "fullPhoto": true, "available": true}, {"name": "Frozen fish", "unit": "frozen", "price": 250, "category": "meat", "image": "/photos/fish.jpg", "fullPhoto": false, "available": true}, {"name": "Goat meat", "unit": "per kg", "price": 100, "category": "meat", "image": "/photos/goat.jpg", "fullPhoto": false, "available": true}, {"name": "Beef", "unit": "1 kg", "price": 120, "category": "meat", "image": "/photos/beef.jpg", "fullPhoto": false, "available": true}, {"name": "Matooke, banana box", "unit": "10 kg box", "price": 550, "category": "produce", "image": "/photos/bananas.jpg", "fullPhoto": false, "available": true}, {"name": "Potatoes, box", "unit": "box", "price": 580, "category": "produce", "image": "/photos/potatoes.jpg", "fullPhoto": true, "available": true}, {"name": "Frozen yam", "unit": "1 kg", "price": 70, "category": "produce", "image": "/photos/taro.jpg", "fullPhoto": true, "available": true}];
+  var ALL=[],qty={},cards={};
   var kr=function(n){return n.toLocaleString('da-DK')+' kr'};
-  var cards={};
-
   var gEl=document.getElementById('groups');
-  GROUPS.forEach(function(g){
-    var sec=document.createElement('div');sec.className='group';sec.id=g.id;
-    sec.innerHTML='<div class="group-head"><span class="chip" style="background:'+g.c+'"></span><h3></h3><span class="count">'+g.items.length+' ITEMS</span></div><div class="grid"></div>';
-    sec.querySelector('h3').textContent=g.t;
-    var grid=sec.querySelector('.grid');
-    g.items.forEach(function(p){
-      var c=document.createElement('article');c.className='card';
-      var media=p.img?'<img class="'+(p.fit==='pack'?'pack':'')+'" src="photo-'+p.img+'.jpg" alt="" loading="lazy"'+(p.pos?' style="object-position:'+p.pos+'"':'')+'>':'<div class="none">'+ICON[p.icon]+'</div>';
-      c.innerHTML='<div class="media">'+media+'</div><div class="body"><div><h4></h4><div class="unit"></div></div><div class="buy"><span class="price">'+kr(p.p)+'</span><div class="stepper"><button type="button" aria-label="Remove one">−</button><output>0</output><button type="button" aria-label="Add one">+</button></div></div></div>';
-      c.querySelector('h4').textContent=p.n;c.querySelector('.unit').textContent=p.u;
-      var out=c.querySelector('output'),b=c.querySelectorAll('button');
-      b[0].onclick=function(){if(qty[p.id]>0){qty[p.id]--;out.textContent=qty[p.id];render()}};
-      b[1].onclick=function(){if(qty[p.id]<20){qty[p.id]++;out.textContent=qty[p.id];render()}};
-      cards[p.id]=c;grid.appendChild(c);
+
+  function normalize(list){
+    var arr=Array.isArray(list)?list:((list&&list.products)||[]);
+    return arr.map(function(r,i){
+      return {id:'p'+i,n:String(r.name||'').trim(),u:String(r.unit||'').trim(),p:Number(r.price)||0,cat:r.category,
+        img:String(r.image||'').trim(),pack:r.fullPhoto===true,out:r.available===false};
+    }).filter(function(p){return p.n});
+  }
+  function imgSrc(s){
+    if(!s)return '';
+    if(/^(https?:)?\/\//.test(s)||/^data:/.test(s))return s;
+    return s.replace(/^\/+/,'');
+  }
+  function placeholder(){var d=document.createElement('div');d.className='none';d.innerHTML=ICON.grain;return d}
+
+  function buildShop(products){
+    ALL=products;qty={};cards={};gEl.innerHTML='';
+    ALL.forEach(function(p){qty[p.id]=0});
+    CATS.forEach(function(g,gi){
+      var items=ALL.filter(function(p){
+        var known=CATS.some(function(c){return c.id===p.cat});
+        return p.cat===g.id||(gi===0&&!known);
+      });
+      if(!items.length)return;
+      var sec=document.createElement('div');sec.className='group';sec.id=g.id;
+      sec.innerHTML='<div class="group-head"><span class="chip" style="background:'+g.c+'"></span><h3></h3><span class="count">'+items.length+(items.length===1?' ITEM':' ITEMS')+'</span></div><div class="grid"></div>';
+      sec.querySelector('h3').textContent=g.t;
+      var grid=sec.querySelector('.grid');
+      items.forEach(function(p){
+        var c=document.createElement('article');c.className='card'+(p.out?' out':'');
+        c.innerHTML='<div class="media"></div><div class="body"><div><h4></h4><div class="unit"></div></div><div class="buy"><span class="price"></span><div class="ctl"></div></div></div>';
+        var media=c.querySelector('.media'),src=imgSrc(p.img);
+        if(src){
+          var im=document.createElement('img');im.className=p.pack?'pack':'';im.alt='';im.loading='lazy';
+          im.onerror=function(){if(im.parentNode)media.replaceChild(placeholder(),im)};
+          im.src=src;media.appendChild(im);
+        }else{media.appendChild(placeholder())}
+        c.querySelector('h4').textContent=p.n;
+        c.querySelector('.unit').textContent=p.u;
+        c.querySelector('.price').textContent=kr(p.p);
+        var ctl=c.querySelector('.ctl');
+        if(p.out){ctl.className='soldout';ctl.textContent='Sold out'}
+        else{
+          ctl.className='stepper';
+          ctl.innerHTML='<button type="button" aria-label="Remove one">−</button><output>0</output><button type="button" aria-label="Add one">+</button>';
+          var out=ctl.querySelector('output'),bt=ctl.querySelectorAll('button');
+          bt[0].onclick=function(){if(qty[p.id]>0){qty[p.id]--;out.textContent=qty[p.id];render()}};
+          bt[1].onclick=function(){if(qty[p.id]<20){qty[p.id]++;out.textContent=qty[p.id];render()}};
+        }
+        cards[p.id]=c;grid.appendChild(c);
+      });
+      gEl.appendChild(sec);
     });
-    gEl.appendChild(sec);
-  });
+    render();
+  }
+  function loadProducts(){
+    if(!window.fetch)return Promise.resolve(DEFAULTS);
+    return fetch('products.json',{cache:'no-cache'})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+      .catch(function(e){console.warn('products.json could not be loaded, using built-in list.',e);return DEFAULTS});
+  }
 
   var listEl=document.getElementById('basket-list');
   function lines(){return ALL.filter(function(p){return qty[p.id]>0})}
@@ -463,6 +492,7 @@ footer .info{display:grid;gap:4px;text-align:right}
     document.getElementById('e-basket').textContent='';
   }
   render();
+  loadProducts().then(function(d){var p=normalize(d);buildShop(p.length?p:normalize(DEFAULTS))});
 
   /* WhatsApp order */
   var f=document.getElementById('order-form'),wa=document.getElementById('wa-send');
