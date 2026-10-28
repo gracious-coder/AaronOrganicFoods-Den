@@ -1,0 +1,46 @@
+media:
+  input: photos
+  output: /photos
+  rename: safe
+
+content:
+  - name: products
+    label: Products
+    type: file
+    path: products.json
+    format: json
+    list: true
+    fields:
+      - name: name
+        label: Product name
+        type: string
+      - name: unit
+        label: "Size or unit (for example: 1 kg, 18 kg bag)"
+        type: string
+      - name: price
+        label: Price (DKK)
+        type: number
+        options:
+          min: 0
+      - name: category
+        label: Shelf
+        type: select
+        options:
+          values:
+            - name: grains
+              label: "Grains & staples"
+            - name: meat
+              label: "Meat & seafood"
+            - name: produce
+              label: "Fresh produce"
+      - name: image
+        label: Photo
+        type: image
+      - name: fullPhoto
+        label: "Photo shows a packaged product (show the whole picture)"
+        type: boolean
+        default: false
+      - name: available
+        label: "In stock (switch off to show Sold out)"
+        type: boolean
+        default: true
