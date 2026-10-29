@@ -4,7 +4,7 @@
     "unit": "18 kg bag",
     "price": 350,
     "category": "grains",
-    "image": "/photos/basmati.jpg",
+    "image": "/photos/20261027143636000ios.jpg",
     "fullPhoto": true,
     "available": true
   },
@@ -13,7 +13,7 @@
     "unit": "18 kg bag",
     "price": 250,
     "category": "grains",
-    "image": "/photos/greenland.jpg",
+    "image": "/photos/20261027143636000ios-1.jpg",
     "fullPhoto": true,
     "available": true
   },
@@ -22,7 +22,7 @@
     "unit": "5 kg bag",
     "price": 85,
     "category": "grains",
-    "image": "/photos/greenland.jpg",
+    "image": "/photos/20261027143835000ios.jpg",
     "fullPhoto": true,
     "available": true
   },
@@ -76,7 +76,7 @@
     "unit": "frozen",
     "price": 250,
     "category": "meat",
-    "image": "/photos/fish.jpg",
+    "image": "/photos/20261026164751495ios.jpg",
     "fullPhoto": false,
     "available": true
   },
@@ -112,7 +112,7 @@
     "unit": "box",
     "price": 580,
     "category": "produce",
-    "image": "/photos/potatoes.jpg",
+    "image": "/photos/20261026165146137ios.jpg",
     "fullPhoto": true,
     "available": true
   },
