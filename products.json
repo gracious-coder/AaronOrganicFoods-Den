@@ -4,7 +4,7 @@
     "unit": "18 kg bag",
     "price": 350,
     "category": "grains",
-    "image": "/photos/20261027143636000ios.jpg",
+    "image": "/photos/20261026165409683ios-1.jpg",
     "fullPhoto": true,
     "available": true
   },
@@ -22,7 +22,7 @@
     "unit": "5 kg bag",
     "price": 85,
     "category": "grains",
-    "image": "/photos/20261027143835000ios.jpg",
+    "image": "/photos/20261027143636000ios-3.jpg",
     "fullPhoto": true,
     "available": true
   },
@@ -47,7 +47,7 @@
   {
     "name": "Posho (maize flour)",
     "unit": "25 kg",
-    "price": 500,
+    "price": 430,
     "category": "grains",
     "image": "/photos/20261027143835000ios-1.jpg",
     "fullPhoto": true,
@@ -73,7 +73,7 @@
   },
   {
     "name": "Frozen fish",
-    "unit": "frozen",
+    "unit": "Frozen Fish ",
     "price": 250,
     "category": "meat",
     "image": "/photos/20261026164751495ios.jpg",
@@ -82,7 +82,7 @@
   },
   {
     "name": "Goat meat",
-    "unit": "per kg",
+    "unit": "1kg",
     "price": 100,
     "category": "meat",
     "image": "/photos/goat.jpg",
@@ -109,11 +109,11 @@
   },
   {
     "name": "Potatoes, box",
-    "unit": "box",
+    "unit": "10kg box",
     "price": 580,
     "category": "produce",
     "image": "/photos/20261026165146137ios.jpg",
-    "fullPhoto": true,
+    "fullPhoto": false,
     "available": true
   },
   {
