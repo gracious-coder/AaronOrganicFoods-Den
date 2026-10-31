@@ -124,5 +124,14 @@
     "image": "/photos/taro.jpg",
     "fullPhoto": true,
     "available": true
+  },
+  {
+    "name": "Frozen Chicken",
+    "unit": "10kg box",
+    "price": 370,
+    "category": "meat",
+    "image": "/photos/20261026164803538ios-3.jpg",
+    "fullPhoto": false,
+    "available": true
   }
 ]
