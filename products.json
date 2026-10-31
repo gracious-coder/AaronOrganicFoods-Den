@@ -27,7 +27,7 @@
     "available": true
   },
   {
-    "name": "Posho (maize flour)",
+    "name": "Maize Flour",
     "unit": "1 kg",
     "price": 20,
     "category": "grains",
@@ -36,7 +36,7 @@
     "available": true
   },
   {
-    "name": "Posho (maize flour)",
+    "name": "Maize Flour",
     "unit": "5 kg",
     "price": 100,
     "category": "grains",
@@ -45,7 +45,7 @@
     "available": true
   },
   {
-    "name": "Posho (maize flour)",
+    "name": "Maize Flour",
     "unit": "25 kg",
     "price": 430,
     "category": "grains",
@@ -108,7 +108,7 @@
     "available": true
   },
   {
-    "name": "Potatoes, box",
+    "name": "Sweet Potatoes",
     "unit": "10kg box",
     "price": 580,
     "category": "produce",
